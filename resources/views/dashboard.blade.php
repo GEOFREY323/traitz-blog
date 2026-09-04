@@ -17,9 +17,17 @@
             </p>
         </div>
 
-        <a href="{{ route('posts.create') }}" class="btn btn-primary">
-            + Write a New Post
-        </a>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+
+            <a href="{{ route('posts.trash') }}" class="btn btn-ghost">
+                🗑️ Trash
+            </a>
+
+            <a href="{{ route('posts.create') }}" class="btn btn-primary">
+                + Write a New Post
+            </a>
+
+        </div>
     </div>
 
 

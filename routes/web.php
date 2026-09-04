@@ -30,6 +30,15 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])
         ->name('posts.destroy');
+        
+    Route::get('/trash', [PostController::class, 'trash'])
+    ->name('posts.trash');
+
+    Route::patch('/trash/{post}/restore', [PostController::class, 'restore'])
+        ->name('posts.restore');
+
+    Route::delete('/trash/{post}/force-delete', [PostController::class, 'forceDelete'])
+        ->name('posts.forceDelete');
 });
 
 Route::get('/posts/{post}', [PostController::class, 'show'])

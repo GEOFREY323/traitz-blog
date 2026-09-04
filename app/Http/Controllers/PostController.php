@@ -177,4 +177,41 @@ class PostController extends Controller
 
         return view('posts.show', compact('post'));
     }
+
+    public function trash()
+    {
+        $posts = Post::onlyTrashed()
+            ->where('user_id', auth()->id())
+            ->with(['tags'])
+            ->latest('deleted_at')
+            ->get();
+
+        return view('posts.trash', compact('posts'));
+    }
+
+    public function restore($id)
+    {
+        $post = Post::onlyTrashed()->findOrFail($id);
+
+        Gate::authorize('update', $post);
+
+        $post->restore();
+
+        return redirect()
+            ->route('posts.trash')
+            ->with('success', 'Post restored successfully.');
+    }
+
+    public function forceDelete($id)
+    {
+        $post = Post::onlyTrashed()->findOrFail($id);
+
+        Gate::authorize('delete', $post);
+
+        $post->forceDelete();
+
+        return redirect()
+            ->route('posts.trash')
+            ->with('success', 'Post permanently deleted.');
+    }
 }
